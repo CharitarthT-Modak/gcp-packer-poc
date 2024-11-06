@@ -38,10 +38,10 @@ jobs:
 
     - name: Validate Packer template
       run: |
-        packer validate -var-file=variables.pkrvars.hcl .
+        packer validate -var-file=values.pkrvars.hcl .
 
     - name: Build Packer Image
       run: |
-        packer build -var-file=variables.pkrvars.hcl .
+        packer build -var-file=values.pkrvars.hcl .
 
       
