@@ -11,8 +11,8 @@ packer {
 source "googlecompute" "ubuntu" {
   project_id          = var.project_id
   # source_image_family = var.source_image_family
-  source_image        = "test-ami-image"
-  # source_image        = "ubuntu-2004-focal-v20241016"
+  # source_image        = "test-ami-image"
+  source_image        = "ubuntu-2204-jammy-v20240927"
   zone                = var.zone
   image_name          = var.image_name
   image_family        = "yeedu-ubuntu"
@@ -26,11 +26,11 @@ source "googlecompute" "ubuntu" {
   subnetwork          = "custom-subnet-modak-nabu"
   # on_host_maintenance = "TERMINATE"   
   use_internal_ip     = true
+  # wrap_startup_script = true
   # startup_script_file = "scripts/setup.sh"
   metadata = {
     "enable-oslogin" = "FALSE"
   }
-
 
   image_labels = {
     poc       = "packer"
@@ -44,7 +44,7 @@ build {
   sources = ["source.googlecompute.ubuntu"]
 
   provisioner "file"{
-    source = "../scripts/setup.sh"
+    source = "scripts/setup.sh"
     destination = "/tmp/setup.sh"
   }
 

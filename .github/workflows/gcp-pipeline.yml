@@ -1,47 +1,47 @@
-# name: Packer Image Build
+name: Packer Image Build
 
-# on:
-#   push:
-#     branches:
-#       # - main
+on:
+  push:
+    branches:
+      # - main
 
-# jobs:
-#   packer-build:
-#     name: Packer Build
-#     runs-on: ubuntu-latest
+jobs:
+  packer-build:
+    name: Packer Build
+    runs-on: self-hosted
 
-#     env:
-#         GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
+    env:
+        GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
 
-#     steps:
-#     - name: Checkout code
-#       uses: actions/checkout@v3
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-#     - name: Setup Google Cloud SDK
-#       uses: google-github-actions/setup-gcloud@v1
-#       with:
-#         version: 'latest'
+    - name: Setup Google Cloud SDK
+      uses: google-github-actions/setup-gcloud@v1
+      with:
+        version: 'latest'
 
-#     - name: Authenticate to Google Cloud
-#       uses: google-github-actions/auth@v1
-#       with:
-#         credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
-#     - name: Install Packer
-#       uses: hashicorp/setup-packer@v2
-#       with:
-#         version: latest
+    - name: Install Packer
+      uses: hashicorp/setup-packer@v2
+      with:
+        version: latest
 
-#     - name: Packer init
-#       run: |
-#         packer init .
+    - name: Packer init
+      run: |
+        packer init .
 
-#     - name: Validate Packer template
-#       run: |
-#         packer validate -var-file=variables.pkrvars.hcl .
+    - name: Validate Packer template
+      run: |
+        packer validate -var-file=variables.pkrvars.hcl .
 
-#     - name: Build Packer Image
-#       run: |
-#         packer build -var-file=variables.pkrvars.hcl .
+    - name: Build Packer Image
+      run: |
+        packer build -var-file=variables.pkrvars.hcl .
 
       

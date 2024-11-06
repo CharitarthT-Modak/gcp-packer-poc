@@ -1,5 +1,11 @@
 #!/bin/bash
-setup_docker() {
+
+# Define log file location
+echo "Shell Script detected."
+
+set -euxo pipefail
+
+install_docker() {
   sudo apt-get update && sudo apt-get upgrade  
   echo "Installing docker..."
   curl -fsSL https://get.docker.com -o get-docker.sh
@@ -7,10 +13,15 @@ setup_docker() {
   echo "Successfully Installed docker"
   echo "Pulling Docker images."
 
-#   us.gcr.io/modak-nabu/yeedu_cfe:v2.9.5-rc1    
-#   us.gcr.io/modak-nabu/yeedu_reactive_actors:v4.13.1-rc15  
-#   us.gcr.io/modak-nabu/yeedu_spark:v3.4.3-rc2    
-#   us.gcr.io/modak-nabu/yeedu_telegraf:1.28.2
+  curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-linux-x86_64.tar.gz
+  tar -xf google-cloud-cli-linux-x86_64.tar.gz
+  ./google-cloud-sdk/install.sh --quiet
+  ./google-cloud-sdk/bin/gcloud auth configure-docker us.gcr.io
+
+  sudo docker pull us.gcr.io/modak-nabu/yeedu_cfe:v2.9.5-rc1    
+  sudo docker pull us.gcr.io/modak-nabu/yeedu_reactive_actors:v4.13.1-rc15  
+  sudo docker pull us.gcr.io/modak-nabu/yeedu_spark:v3.4.3-rc2
+  sudo docker pull us.gcr.io/modak-nabu/yeedu_telegraf:1.28.2
 
   echo "Docker images pulled successfully."
 }
@@ -61,7 +72,7 @@ install_az_cli() {
 
 install_fluentd(){
     echo "Installing fluentd..."
-    curl -fsSL https://toolbelt.treasuredata.com/sh/install-ubuntu-focal-fluent-package5-lts.sh | sh
+    curl -fsSL https://toolbelt.treasuredata.com/sh/install-ubuntu-jammy-fluent-package5-lts.sh | sh
     echo "fluentd installed successfully"
 }
   
@@ -69,9 +80,10 @@ install_cloudwatch(){
     echo "Installing cloudwatch..."
     curl https://s3.amazonaws.com/aws-cloudwatch/downloads/latest/awslogs-agent-setup.py -O
     sudo apt update -y
-    sudo apt-get install python -y
+    sudo apt-get install python2 -y
+    # sudo apt-get install -y python2.7
     create_aws_cloudwatch_conf_file
-    sudo python ./awslogs-agent-setup.py -c /tmp/awslogs.conf --region us-east-2 -n
+    sudo python2 ./awslogs-agent-setup.py -c /tmp/awslogs.conf --region us-east-2 -n
     echo "cloudwatch installed successfully"
 }
 
@@ -148,4 +160,5 @@ main() {
     # install_law
 }
 
+# main > "$LOG_FILE" 2>&1
 main
