@@ -25,7 +25,7 @@ source "googlecompute" "ubuntu" {
   network             = "modak-nabu-spark-vpc"
   subnetwork          = "custom-subnet-modak-nabu"
   # on_host_maintenance = "TERMINATE"   
-  # use_internal_ip     = true
+  use_internal_ip     = false
   # wrap_startup_script = true
   # startup_script_file = "scripts/setup.sh"
   metadata = {
