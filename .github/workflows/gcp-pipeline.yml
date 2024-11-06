@@ -3,7 +3,7 @@ name: Packer Image Build
 on:
   push:
     branches:
-      # - main
+      - main
 
 jobs:
   packer-build:
