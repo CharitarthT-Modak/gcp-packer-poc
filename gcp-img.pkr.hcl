@@ -7,7 +7,6 @@ packer {
     }
   }
 }
-
 source "googlecompute" "ubuntu" {
   project_id          = var.project_id
   # source_image_family = var.source_image_family
