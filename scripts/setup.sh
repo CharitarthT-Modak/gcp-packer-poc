@@ -6,7 +6,7 @@ echo "Shell Script detected."
 set -euxo pipefail
 
 install_docker() {
-  sudo apt-get update && sudo apt-get upgrade  
+  sudo apt-get update -y && sudo apt-get upgrade -y
   echo "Installing docker..."
   curl -fsSL https://get.docker.com -o get-docker.sh
   sudo sh get-docker.sh   
@@ -19,9 +19,9 @@ install_docker() {
   ./google-cloud-sdk/bin/gcloud auth configure-docker us.gcr.io
 
   sudo docker pull us.gcr.io/modak-nabu/yeedu_cfe:v2.9.5-rc1    
-  sudo docker pull us.gcr.io/modak-nabu/yeedu_reactive_actors:v4.13.1-rc15  
-  sudo docker pull us.gcr.io/modak-nabu/yeedu_spark:v3.4.3-rc2
-  sudo docker pull us.gcr.io/modak-nabu/yeedu_telegraf:1.28.2
+#   sudo docker pull us.gcr.io/modak-nabu/yeedu_reactive_actors:v4.13.1-rc15  
+#   sudo docker pull us.gcr.io/modak-nabu/yeedu_spark:v3.4.3-rc2
+#   sudo docker pull us.gcr.io/modak-nabu/yeedu_telegraf:1.28.2
 
   echo "Docker images pulled successfully."
 }
